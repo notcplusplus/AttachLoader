@@ -1,0 +1,51 @@
+Sub SaveToOneFile()
+
+Dim ActiveEmail As Outlook.MailItem
+Dim TransForm As Attachments
+Dim SubjLine, FilePath As String
+Dim SubjArray, word As Variant
+Dim PDFCount As Integer
+
+FilePath = "O:\Client Implementations\ARCHIVED\Transfer forms via Email\transition back up - 01.08.2018\"
+
+For k = 1 To 20
+Set ActiveEmail = Application.ActiveExplorer.Selection.Item(k)
+Set TransForm = ActiveEmail.Attachments
+SubjLine = ActiveEmail.Subject
+SubjLine = Replace(SubjLine, ",", "")
+SubjLine = Replace(SubjLine, "/B", "")
+SubjLine = Replace(SubjLine, "/F", "")
+SubjLine = Replace(SubjLine, "RE: ", "")
+SubjLine = Replace(SubjLine, "FW: ", "")
+
+SubjArray = Split(SubjLine, " ")
+
+For i = TransForm.Count To 1 Step -1
+
+    If Right(TransForm.Item(i).FileName, 3) = "PDF" Or _
+        Right(TransForm.Item(i).FileName, 3) = "pdf" Then
+        
+        For Each word In SubjArray
+            
+            'If word Like "#*?" And SubjArray(0) = "*RUSH*" Then
+            'TransForm.Item(i).SaveAsFile FilePath & SubjArray(1) & _
+            '    " " & SubjArray(2) & " " & SubjArray(3) & ".pdf"
+            'ActiveEmail.Delete
+            
+            If word Like "#?*" Then
+            TransForm.Item(i).SaveAsFile FilePath & word & ".pdf"
+          
+            'ActiveEmail.Delete
+            End If
+
+        Next
+        'PDFCount = PDFCount + 1
+    End If
+Next
+
+'If PDFCount > 1 Then
+'Debug.Print ActiveEmail.Subject
+'End If
+'PDFCount = 0
+Next
+End Sub

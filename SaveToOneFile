@@ -6,7 +6,7 @@ Dim SubjLine, FilePath As String
 Dim SubjArray, word As Variant
 Dim PDFCount As Integer
 
-FilePath = "O:\Client Implementations\ARCHIVED\Transfer forms via Email\transition back up - 01.08.2018\"
+FilePath = "O:\Desired File Path\"
 
 For k = 1 To 20
 Set ActiveEmail = Application.ActiveExplorer.Selection.Item(k)
